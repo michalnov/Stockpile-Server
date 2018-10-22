@@ -19,18 +19,17 @@ type Server struct {
 
 func (s *Server) routes() {
 	s.router.HandleFunc("/hello", handler.Hello_Handler).Methods("GET")
-	//s.router.HandleFunc("/shutdown", func(w http.ResponseWriter, r *http.Request) {
-	//	s.Terminate <- 0
-	//})
+	s.router.HandleFunc("/shutdown", func(w http.ResponseWriter, r *http.Request) {
+		s.Terminate <- 0
+	})
+
 }
 
 func (s *Server) Start() {
 	fmt.Println("Run server on port: " + s.conf.port)
 	http.Handle("/", s.router)
-	s.router.HandleFunc("/hello", handler.Hello_Handler).Methods("GET")
-	s.router.HandleFunc("/shutdown", func(w http.ResponseWriter, r *http.Request) {
-		s.Terminate <- 0
-	})
+	s.routes()
+	s.router.HandleFunc("/what", handler.Hello_Handler).Methods("GET")
 	http.ListenAndServe(s.conf.port, s.router)
 }
 
