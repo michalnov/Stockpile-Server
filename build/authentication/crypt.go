@@ -12,18 +12,18 @@ import (
 )
 
 func salt(input string) string {
-	out := ""
-
+	out := "this" + input + "salt"
+	return out
 }
 
-func Hasher(key string) string {
-	hasher := md5.New()
-	hasher.Write([]byte(key))
-	return hex.EncodeToString(hasher.Sum(nil))
+func hasher(key string) string {
+	hash := md5.New()
+	hash.Write([]byte(salt(key)))
+	return hex.EncodeToString(hash.Sum(nil))
 }
 
-func Encrypt(key, text []byte) ([]byte, error) {
-	block, err := aes.NewCipher(key)
+func encrypt(key, text []byte) ([]byte, error) {
+	block, err := aes.NewCipher(hasher(key))
 	if err != nil {
 		return nil, err
 	}
@@ -38,8 +38,8 @@ func Encrypt(key, text []byte) ([]byte, error) {
 	return ciphertext, nil
 }
 
-func Decrypt(key, text []byte) ([]byte, error) {
-	block, err := aes.NewCipher(key)
+func decrypt(key, text []byte) ([]byte, error) {
+	block, err := aes.NewCipher(hasher(key))
 	if err != nil {
 		return nil, err
 	}

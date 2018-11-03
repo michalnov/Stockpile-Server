@@ -19,6 +19,7 @@ type Server struct {
 
 func (s *Server) routes() {
 	s.router.HandleFunc("/hello", handler.Hello_Handler).Methods("GET")
+	s.router.HandleFunc("/login", handler.LoginHandler).Methods("POST")
 	s.router.HandleFunc("/shutdown", func(w http.ResponseWriter, r *http.Request) {
 		s.Terminate <- 0
 	})

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync/atomic"
 
 	"github.com/michalnov/Stockpile-Server/build/server"
 )
@@ -10,14 +11,20 @@ func main() {
 	fmt.Println("Hello server")
 
 	term := make(chan int)
+	var count uint64
 
 	serv, _ := server.NewServer()
-	//go runServ(serv, term, ":8080")
 	go runServ(serv, term, ":8080")
-	_ = <-term
+	counter := atomic.LoadUint64(&count)
+	for counter != 0 {
+		_ = <-term
+		atomic.AddUint64(&count, ^uint64(0))
+		counter = atomic.LoadUint64(&count)
+	}
 }
 
 func runServ(s server.Server, terminate chan int, port string) {
+	atomic.AddUint64(&count, 1)
 	s.Terminate = terminate
 	s.SetPort(port)
 	s.Start()
