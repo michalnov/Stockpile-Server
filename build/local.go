@@ -10,10 +10,10 @@ import (
 
 func main() {
 	fmt.Println("Hello server")
-	router = mux.NewRouter()
+	router := mux.NewRouter()
 	fmt.Println("Run server on port: 3311")
 	http.Handle("/", router)
-	s.router.HandleFunc("/what", handler.Hello_Handler).Methods("GET")
+	router.HandleFunc("/what", handler.Hello_Handler).Methods("GET")
 	router.HandleFunc("/login", handler.LoginHandler).Methods("POST")
 	http.ListenAndServe(":3311", router)
 }
