@@ -6,9 +6,9 @@ import (
 )
 
 type loginRequest struct {
-	username string
-	password string
-	token    string
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+	Token    string `json:"token,omitempty"`
 }
 
 func Hello_Handler(w http.ResponseWriter, r *http.Request) {

@@ -15,5 +15,6 @@ func main() {
 	http.Handle("/", router)
 	router.HandleFunc("/what", handler.Hello_Handler).Methods("GET")
 	router.HandleFunc("/login", handler.LoginHandler).Methods("POST")
+	router.HandleFunc("/update", handler.UpdateStock).Methods("POST")
 	http.ListenAndServe(":3311", router)
 }
