@@ -35,12 +35,12 @@ func UpdateStock(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&req)
 	if req.Token == "" {
 		w.WriteHeader(http.StatusForbidden)
-		response := json.NewEncoder(w).Encode(res)
-		fmt.Fprintf(w, response)
+		_ = json.NewEncoder(w).Encode(res)
+		//fmt.Fprintf(w, response)
 	} else if !scanUsers(req.Token) {
 		w.WriteHeader(http.StatusForbidden)
-		response := json.NewEncoder(w).Encode(res)
-		fmt.Fprintf(w, response)
+		_ = json.NewEncoder(w).Encode(res)
+		//fmt.Fprintf(w, response)
 	} else {
 		w.WriteHeader(http.StatusOK)
 		db, err := sql.Open("mysql", dbconf)
@@ -59,8 +59,8 @@ func UpdateStock(w http.ResponseWriter, r *http.Request) {
 			err = results.Scan(&swap.Name, &swap.Quantity, &swap.Origin, &swap.Recipient)
 			res.Stockunits = append(res.Stockunits, swap)
 		}
-		response := json.NewEncoder(w).Encode(res)
-		fmt.Fprintf(w, response)
+		_ = json.NewEncoder(w).Encode(res)
+		//fmt.Fprintf(w, response)
 	}
 
 }

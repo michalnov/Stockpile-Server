@@ -26,9 +26,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		res := loginRequest{}
 		res.Token = randomString(64)
 		Users = append(Users, user{Username: req.Username, Token: res.Token})
-		response := json.NewEncoder(w).Encode(res)
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, response)
+		_ = json.NewEncoder(w).Encode(res)
 	} else {
 		w.WriteHeader(http.StatusForbidden)
 		fmt.Fprintf(w, "\"token\":\"\"")
@@ -37,7 +36,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func scanUsers(toekn string) bool {
-	for index, element := range Users {
+	for _, element := range Users {
 		if element.Token == toekn {
 			return true
 		}
