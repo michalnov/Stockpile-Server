@@ -48,6 +48,16 @@ func UpdateStock(w http.ResponseWriter, r *http.Request) {
 			panic(err.Error())
 		}
 
+		results, err := db.Query("select name, quantity, origin, recipient from stock")
+		if err != nil {
+			panic(err.Error())
+		}
+
+		for results.Next() {
+			var swap StockUnit
+			err = results.Scan(&swap.Name, &swap.Quantity, &swap.Origin, &swap.Recipient)
+			res = append(res, swap)
+		}
 		response := json.NewEncoder(w).Encode(res)
 		fmt.Fprintf(w, response)
 	}
