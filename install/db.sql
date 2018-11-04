@@ -35,11 +35,22 @@ CREATE TABLE IF NOT EXISTS `michalstock`.`stock` (
   `idstock` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `origin` VARCHAR(45) NULL,
+  `recipient` VARCHAR(45) NULL,
   `quantity` INT NULL,
   PRIMARY KEY (`idstock`))
 ENGINE = InnoDB;
 
 insert into user(username,password) values ("tester","test012");
+
+insert into stock(name,origin,recipient,quantity) values ("gold","snina","Tom",512);
+insert into stock(name,origin,recipient,quantity) values ("vodka","croatia","John",255);
+insert into stock(name,origin,recipient,quantity) values ("I5","rwanda","Pepe",12);
+insert into stock(name,origin,recipient,quantity) values ("NZT","pluto","Jan",1234);
+
+insert into stock(name,origin,recipient,quantity) values ("ABC","uran","uuw",92);
+insert into stock(name,origin,recipient,quantity) values ("CDE","saturn","wwu",59);
+insert into stock(name,origin,recipient,quantity) values ("EFG","jupiter","wuw",2);
+insert into stock(name,origin,recipient,quantity) values ("GHI","mars","uwu",34);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
