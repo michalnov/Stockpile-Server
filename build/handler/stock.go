@@ -3,6 +3,7 @@ package handler
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -56,7 +57,7 @@ func UpdateStock(w http.ResponseWriter, r *http.Request) {
 		for results.Next() {
 			var swap StockUnit
 			err = results.Scan(&swap.Name, &swap.Quantity, &swap.Origin, &swap.Recipient)
-			res = append(res, swap)
+			res.Stockunits = append(res.Stockunits, swap)
 		}
 		response := json.NewEncoder(w).Encode(res)
 		fmt.Fprintf(w, response)
